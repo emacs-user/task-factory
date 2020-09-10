@@ -10,9 +10,8 @@
 ;; Если у вас с этим проще -- просто раскомментируйте строки с
 ;; соответствующими репозиториями
 ;;
-(condition-case nil
-    (require 'package)
-  (error nil))
+(ignore-error
+    (require 'package))
 (if (eq system-type 'darwin)
     (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
                              ("gnu" . "http://elpa.gnu.org/packages/")
@@ -41,22 +40,43 @@
 			     ("myelpa" . "~/.emacs.p/")
 			     )))
 (setq package-check-signature nil)
-(package-initialize)
+(ignore-error
+    (package-initialize))
 ;;
 ;; Инструмент для создания пользовательского репозитория "myelpa",
 ;; который применялся выше для машин с Windows и Linux
 ;; ---------------------------------------------------------------
 ;;
-(condition-case nil
+(ignore-error
     (require 'elpa-mirror)
-  (error nil))
-(setq elpamr-default-output-directory "~/.emacs.p")
+    (setq elpamr-default-output-directory "~/.emacs.p"))
 ;;
 ;; Подсветка скобок разными цветами
 ;; --------------------------------
 ;;
-(condition-case nil
-    (lambda ()
-      (require 'rainbow-delimiters)
-      (rainbow-delimiters-mode))
-  (error nil))
+(ignore-error
+  (require 'rainbow-delimiters)
+  (rainbow-delimiters-mode))
+;;
+;; Настройка автодополнения helm
+;; -----------------------------
+;;
+(ignore-error
+  (require 'helm-config)
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-o") 'helm-find-files))
+;;
+;; Автодополнение
+;; --------------
+;;
+(ignore-error
+    (require 'auto-complete)
+  (auto-complete-mode))
+;;
+;; Управление Git-репозиторием
+;; ---------------------------
+;;
+(ignore-error
+    (require 'magit))
+
+    
