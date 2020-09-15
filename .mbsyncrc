@@ -1,0 +1,68 @@
+# Секция 1: IMAP аккаунт
+IMAPStore MailRu-remote
+Host imap.mail.ru
+Port 993
+User sergey.ievlev@mail.ru
+PassCmd "cat ~/.mbsync-MailRu-pass"
+SSLType IMAPS
+SSLVersions TLSv1.2
+
+# Секция 2: локальное хранишище
+MaildirStore MailRu-local
+Path ~/Maildir/
+Inbox ~/Maildir/Входящие
+SubFolders Verbatim
+
+# Секция 3: "каналы" между аккаунтом и хранилищем
+Channel MailRu-inbox
+Master :MailRu-remote:"INBOX"
+Slave :MailRu-local:"Входящие"
+Expunge None
+CopyArrivalDate yes
+Sync All
+Create Slave
+SyncState *
+
+Channel MailRu-trash
+Master :MailRu-remote:"&BBoEPgRABDcEOAQ9BDA-"
+Slave :MailRu-local:"Корзина"
+Expunge None
+CopyArrivalDate yes
+Sync All
+Create Slave
+SyncState *
+
+Channel MailRu-sent
+Master :MailRu-remote:"&BB4EQgQ,BEAEMAQyBDsENQQ9BD0ESwQ1-"
+Slave :MailRu-local:"Отправленные"
+Expunge None
+CopyArrivalDate yes
+Sync All
+Create Slave
+SyncState *
+
+Channel MailRu-spam
+Master :MailRu-remote:"&BCEEPwQwBDw-"
+Slave :MailRu-local:"Спам"
+Expunge None
+CopyArrivalDate yes
+Sync All
+Create Slave
+SyncState *
+
+Channel MailRu-drafts
+Master :MailRu-remote:"&BCcENQRABD0EPgQyBDgEOgQ4-"
+Slave :MailRu-local:"Черновики"
+Expunge None
+CopyArrivalDate yes
+Sync All
+Create Slave
+SyncState *
+
+# Секция 4: объединяем "каналы" в группу
+Group MailRu-group
+Channel MailRu-inbox
+Channel MailRu-sent
+Channel MailRu-spam
+Channel MailRu-trash
+Channel MailRu-drafts
