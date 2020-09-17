@@ -58,12 +58,14 @@
   (require 'rainbow-delimiters)
   (rainbow-delimiters-mode))
 ;;
-;; Настройка автодополнения helm
+;; Настройка автодополнения Helm
 ;; -----------------------------
 ;;
 (ignore-error
-  (require 'helm-config)
+    (require 'helm-config)
+  (helm-mode 1)
   (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "<f5>") 'helm-M-x)
   (global-set-key (kbd "C-o") 'helm-find-files))
 ;;
 ;; Автодополнение
@@ -71,6 +73,7 @@
 ;;
 (ignore-error
     (require 'auto-complete)
+  (ac-config-default)
   (auto-complete-mode))
 ;;
 ;; Управление Git-репозиторием
@@ -78,5 +81,19 @@
 ;;
 (ignore-error
     (require 'magit))
+;;
+;; Перспективы
+;; -----------
+;;
+;; (ignore-error
+;;     (require 'perspective)
+;;   (setq persp-state-default-file "~/.emacs.d/perspective")
+;;   (persp-mode))
+;;
+;; Настройка Buffer-show
+;; ---------------------
+;;
+(global-set-key (kbd "<f2>") 'bs-show)
+
 
     
