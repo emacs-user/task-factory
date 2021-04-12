@@ -66,3 +66,37 @@ Channel MailRu-sent
 Channel MailRu-spam
 Channel MailRu-trash
 Channel MailRu-drafts
+
+
+     # Секция 1: IMAP аккаунт
+     IMAPStore Mail-remote
+     Host 10.1.2.97
+     Port 1143
+     User ievlev.s.a
+     Pass Prizmawifi10
+     SSLType IMAPS
+     SSLVersions TLSv1.2
+
+     # Секция 2: локальное хранишище
+     MaildirStore Mail-local
+     Path ~/Maildir_local/
+     Inbox ~/Maildir_local/Входящие
+     SubFolders Verbatim
+
+     # Секция 3: "каналы" между аккаунтом и хранилищем
+     Channel Mail-inbox
+     Master :Mail-remote:"INBOX"
+     Slave :Mail-local:"Входящие"
+     Expunge None
+     CopyArrivalDate yes
+     Sync All
+     Create Slave
+     SyncState *
+
+     # Секция 4: объединяем "каналы" в группу
+     Group Mail-group
+     Channel Mail-inbox
+     #Channel Mail-sent
+     #Channel Mail-spam
+     #Channel Mail-trash
+     #Channel Mail-drafts

@@ -123,6 +123,9 @@
 ;; Переместить окно вправо
 (global-unset-key (kbd (concat "C-" modifierKey "-l")))
 (global-set-key (kbd (concat "C-" modifierKey "-l")) 'windmove-right)
+;; Переключиться в другое окно
+(global-unset-key (kbd (concat modifierKey "-q")))
+(global-set-key (kbd (concat modifierKey "-q")) 'other-window)
 ;;
 ;; Управление буферами
 ;; ===================

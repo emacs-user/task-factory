@@ -1,28 +1,40 @@
+(define-key mu4e-headers-mode-map (kbd "<f9> <f9>") 'tf-mu4e-headers-task-create)
+(define-key mu4e-headers-mode-map (kbd "<f9> <f9>") 'tf-mu4e-headers-task-create)
 
-(add-to-list 'load-path "/usr/local/Cellar/mu/1.4.13/share/emacs/site-lisp/mu/mu4e/")
-(require 'mu4e)
-(require 'org-mu4e)
-;;
-(global-set-key (kbd "<f9> m") 'mu4e)
-;;
-(setq mu4e-mu-binary "/usr/local/Cellar/mu/1.4.13/bin/mu")
-;;
-(setq mu4e-get-mail-command "mbsync -q -c ~/pro/task-factory/.mbsyncrc MailRu-group")
-;;
-(setq
- mue4e-headers-skip-duplicates  t
- mu4e-view-show-images t
- mu4e-view-show-addresses t
- mu4e-compose-format-flowed nil
- mu4e-date-format "%y/%m/%d"
- mu4e-headers-date-format "%Y/%m/%d"
- mu4e-change-filenames-when-moving t
- mu4e-attachments-dir "~/Downloads"
- mu4e-maildir       "~/Maildir"
- mu4e-sent-folder   "/Отправленные"
- mu4e-drafts-folder "/Черновики"
- mu4e-trash-folder  "/Корзина"
- )
+(defvar tf-inbox-dir "~/pro/inbox"
+  "Path to the directory with incoming files")
 
-(setq user-mail-address "sergey.ievlev@mail.ru")
+(defun tf-open-dir-incoming-files ()
+  "Open a directory with incoming files.
+The directory is set by the variable `tf-inbox-dir`"
+  (interactive)
+  (dired tf-inbox-dir)
+  (delete-other-windows))
 
+(global-unset-key (kbd "C-<f9> i"))
+(global-set-key (kbd "C-<f9> i") 'tf-open-dir-incoming-files)
+
+(setq exec-path (append exec-path '("/usr/local/bin")))
+
+(defun tf-insert-note (text &optional file)
+  "Adds a new note `text' to the task where the point is located.
+Optionally, the `file' is added to the attachment"
+  ())
+
+(define-key dired-mode-map (kbd "<f9> a") 'org-attach-dired-to-subtree)
+
+(use-package pdf-tools
+  ; :pin manual
+   :config
+   (pdf-tools-install)
+   (setq-default pdf-view-display-size 'fit-width)
+   (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
+   :custom
+   (pdf-annot-activate-created-annotations t "automatically annotate highlights"))
+
+(setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+      TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
+      TeX-source-correlate-start-server t)
+
+(add-hook 'TeX-after-compilation-finished-functions
+	  #'TeX-revert-document-buffer)
