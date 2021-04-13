@@ -117,7 +117,7 @@
 (global-set-key (kbd "<f9> m") 'mu4e)
 
 (setq mu4e-maildir "~/Maildir")
-;; (setq mu4e-sent-folder   "/G/Отправленные")
+(setq mu4e-sent-folder   "/G/Отправленные")
 ;; (setq mu4e-trash-folder  "/G/Корзина")
 ;; (setq mu4e-drafts-folder "/G/Черновики")
 ;; (setq mu4e-refile-folder "/G/Архив")

@@ -201,7 +201,7 @@
      (load-file (concat init-config-dir "tf-org.el"))
    #+END_SRC
 
-** Общие настройки (tf-helper-core.el)
+** COMMENT Общие настройки (tf-helper-core.el)
    :PROPERTIES:
    :header-args: :tangle tf-helper-core.el :exports code
    :END:
@@ -641,10 +641,10 @@
      (global-set-key (kbd "<f9> m") 'mu4e)
 
      (setq mu4e-maildir "~/Maildir")
-     ;; (setq mu4e-sent-folder   "/G/Отправленные")
-     ;; (setq mu4e-trash-folder  "/G/Корзина")
-     ;; (setq mu4e-drafts-folder "/G/Черновики")
-     ;; (setq mu4e-refile-folder "/G/Архив")
+     (setq mu4e-sent-folder   "/G/Отправленные")
+     (setq mu4e-trash-folder  "/G/Корзина")
+     (setq mu4e-drafts-folder "/G/Черновики")
+     (setq mu4e-refile-folder "/G/Архив")
 
      (setq mu4e-mu-binary "/usr/local/bin/mu")
 
